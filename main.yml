@@ -1,0 +1,27 @@
+---
+- name: first play
+  hosts: all
+  become: yes
+  tasks:
+    - name: first task
+      command: date
+    - name: run script on slave
+      script: script.sh
+    - name: Upadte repo for nginx
+      command: sudo apt update
+    - name: Install nginx
+      become: yes
+      apt:
+        name: nginx
+        state: latest
+    - name: start nginx
+      become: yes
+      service:
+        name: nginx
+        state: started
+- name: second play
+  hosts: all
+  become: yes
+  tasks:
+    - name: execute a task
+      command: ls -l
